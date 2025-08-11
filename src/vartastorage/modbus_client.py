@@ -252,7 +252,7 @@ class ModbusClient:
         )
         return self._convert_value_to_int(result)
 
-    def _get_value_modbus(self, address, count) -> list:
+    def _get_value_modbus(self, address: int, count: int) -> list[int]:
         if not self._modbus_client.is_socket_open():
             self._modbus_client.connect()
 
@@ -269,15 +269,23 @@ class ModbusClient:
         return rr.registers
 
     @staticmethod
-    def _clean_string(input_bytes) -> str:
+    def _clean_string(
+        input_bytes: int | float | str | list[bool] | list[int] | list[float],
+    ) -> str:
         # I know this is super wierd. But i have no idea whats here going on in the
         # pymodbus library and i have to use this function to reformat the string
         # correctly
-        r = "".join(c for c in input_bytes if c.isprintable())
+        r = (
+            "".join(c for c in input_bytes if c.isprintable())
+            if isinstance(input_bytes, str)
+            else ""
+        )
         return r
 
     @staticmethod
-    def _convert_value_to_int(value: int | float | str | list) -> int:
+    def _convert_value_to_int(
+        value: int | float | str | list[bool] | list[int] | list[float],
+    ) -> int:
         if isinstance(value, list):
             # if value is a list, return the first element or 0 if the list is empty
             return int(value[0]) if value else 0

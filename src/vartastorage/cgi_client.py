@@ -10,14 +10,16 @@ ERROR_TEMPLATE = "An error occurred while polling {}. Please check your connecti
 
 @dataclass
 class CgiData:
-    info: dict = field(default_factory=dict)
-    service: dict = field(default_factory=dict)
-    ems: dict = field(default_factory=dict)
-    energy: dict = field(default_factory=dict)
+    info: dict[str, Any] = field(default_factory=dict)
+    service: dict[str, Any] = field(default_factory=dict)
+    ems: dict[str, Any] = field(default_factory=dict)
+    energy: dict[str, Any] = field(default_factory=dict)
 
 
 class CgiClient:
-    def __init__(self, host, username=None, password=None):
+    def __init__(
+        self, host: str, username: str | None = None, password: str | None = None
+    ):
         self.host = host
         self.username = username
         self.password = password
@@ -85,7 +87,7 @@ class CgiClient:
         return self._get_cgi_as_dict("/cgi/info.js")
 
     def _get_cgi_as_dict(self, path: str) -> dict[str, Any]:
-        result = {}
+        result: dict[str, Any] = {}
         try:
             response = self._request_data(path)
             response.raise_for_status()
@@ -101,7 +103,7 @@ class CgiClient:
 
         return result
 
-    def _request_data(self, urlEnding) -> Response:
+    def _request_data(self, urlEnding: str) -> Response:
         try:
             url = f"http://{self.host}{urlEnding}"
             # Check if a password is set

@@ -65,6 +65,9 @@ class VartaStorageData:
 
 
 class VartaStorage:
+    cgi_client: CgiClient | None = None
+    modbus_client: ModbusClient
+
     def __init__(
         self,
         modbus_host: str,

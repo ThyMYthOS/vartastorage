@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import Any
 
 
 @dataclass
@@ -49,7 +50,7 @@ class InfoData:
     lg_battery_serial: list[str]
 
     @classmethod
-    def from_dict(cls, info: dict) -> "InfoData":
+    def from_dict(cls, info: dict[str, Any]) -> "InfoData":
         return cls(
             device_description=info.get("Device_Description"),
             display_serial=info.get("Display_Serial"),
@@ -104,7 +105,7 @@ class EnergyData:
     total_charge_cycles: list[int]  # list of cycles per charger
 
     @classmethod
-    def from_dict(cls, energy: dict) -> "EnergyData":
+    def from_dict(cls, energy: dict[str, Any]) -> "EnergyData":
         return cls(
             total_grid_ac_dc=energy.get("EGrid_AC_DC", 0) / 1000,
             total_grid_dc_ac=energy.get("EGrid_DC_AC", 0) / 1000,
@@ -122,7 +123,7 @@ class ServiceData:
     status_main: int | None
 
     @classmethod
-    def from_dict(cls, service: dict) -> "ServiceData":
+    def from_dict(cls, service: dict[str, Any]) -> "ServiceData":
         return cls(
             hours_until_filter_maintenance=service.get("FilterZeit"),
             status_fan=service.get("Fan"),
@@ -154,7 +155,7 @@ class WrData:
     fan_speed: int | None  # percentage
 
     @classmethod
-    def from_dict(cls, wr: dict) -> "WrData":
+    def from_dict(cls, wr: dict[str, Any]) -> "WrData":
         return cls(
             nominal_power=wr.get("PSoll"),
             u_verbund_l1=wr.get("U Verbund L1"),
@@ -206,7 +207,7 @@ class EMeterData:
     is_pv_l3: int | None
 
     @classmethod
-    def from_dict(cls, emeter: dict) -> "EMeterData":
+    def from_dict(cls, emeter: dict[str, Any]) -> "EMeterData":
         return cls(
             f_netz=emeter.get("FNetz"),
             sens_state=emeter.get("SensState"),
@@ -242,7 +243,7 @@ class EnsData:
     u_v_l3: int | None
 
     @classmethod
-    def from_dict(cls, ens: dict) -> "EnsData":
+    def from_dict(cls, ens: dict[str, Any]) -> "EnsData":
         return cls(
             f_netz=ens.get("FNetz"),
             u_v_l1=ens.get("U_V_L1"),
