@@ -36,7 +36,11 @@ dev = [
     "ruff >=0.12.8",
     "pre-commit (>=4.3,<5)",
     "types-requests>=2.32.4.20250809",
+    "mypy>=1.17.1",
 ]
+
+[tool.mypy]
+python_version = "3.11"
 
 [tool.ruff]
 line-length = 88
